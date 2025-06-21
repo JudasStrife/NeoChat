@@ -13,7 +13,7 @@ public class ControllerChat {
     {
         this.Repository=Repository;
     }
-    @GetMapping("/home")
+    @GetMapping("home")
     public String GetChat(Model model)
     {
         return Repository.getData();
