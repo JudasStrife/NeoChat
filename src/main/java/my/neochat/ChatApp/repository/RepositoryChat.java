@@ -1,10 +1,11 @@
 package my.neochat.ChatApp.repository;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import my.neochat.ChatApp.model.ChatMessage;
+
 @Repository
-public class RepositoryChat {
-   public String getData (){
-        return "home.html";
-    }
+public interface RepositoryChat extends CrudRepository<ChatMessage, Long>{
+   
 }
