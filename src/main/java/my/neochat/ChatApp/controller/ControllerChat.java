@@ -31,7 +31,7 @@ public class ControllerChat {
         return "Login done";
     }
 
-        @GetMapping("register")
+    @GetMapping("register")
     public String GetRegister(Model model)
     {
         return "Please Register";
