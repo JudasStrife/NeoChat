@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import my.neochat.ChatApp.model.ChatUser;
 
 @Repository
-public interface RepositoryChat extends JpaRepository<ChatUser, String>{
+public interface RepositoryUser extends JpaRepository<ChatUser, String>{
    public ChatUser findByusername(String username);
 }
