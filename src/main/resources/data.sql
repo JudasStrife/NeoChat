@@ -1,0 +1,3 @@
+INSERT INTO users VALUES
+('Maga','123')
+ON CONFLICT (username) DO NOTHING;

@@ -17,28 +17,20 @@ public class ChatMessage {
     private String text;
     private String sender;
     private String receiver;
-    private Instant Date;
+    private Instant date;
     protected ChatMessage(){};
     public ChatMessage(String text, String sender, String receiver)
     {
         this.text=text;
         this.sender=sender;
         this.receiver=receiver;
-        Date=Instant.now();
+        date=Instant.now();
     }
     @Override
     public String toString()
     {
         return String.format(
-            "Message[id=%d, text=%s, from=%s, to=%s",
+            "Message[id=%d, text=%s, from=%s, to=%s]",
             id, text, sender, receiver);
     }
-}
-@Entity
-@Table(name = "users")
-public class User
-{
-    @Id
-    private String user;
-    private String password;
 }
