@@ -1,12 +1,11 @@
+
+CREATE TABLE IF NOT EXISTS users (
+  username VARCHAR(64) PRIMARY KEY,
+  password VARCHAR(64) NOT NULL);
+
 CREATE TABLE IF NOT EXISTS messages (
   id BIGINT PRIMARY KEY,
   text VARCHAR(256) NOT NULL,
-  sender VARCHAR(64) NOT NULL,
-  receiver VARCHAR(64) NOT NULL,
+  sender VARCHAR(64) REFERENCES users(username),
+  receiver VARCHAR(64) REFERENCES users(username),
   date TIMESTAMP NOT NULL);
-
-  DROP TABLE users;
-
-  CREATE TABLE IF NOT EXISTS users (
-  username VARCHAR(64) PRIMARY KEY,
-  password VARCHAR(64) NOT NULL);
