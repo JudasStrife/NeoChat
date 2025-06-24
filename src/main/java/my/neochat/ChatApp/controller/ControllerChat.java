@@ -16,9 +16,9 @@ public class ControllerChat {
         this.Service=Service;
     }
     @GetMapping("home")
-    public String GetTest(Model model)
+    public String GetTest(@RequestParam String username)
     {
-        return Service.findUser("Maga").toString();
+        return Service.findUser(username).toString();
     }
     @GetMapping("login")
     public String GetLogin(Model model)
