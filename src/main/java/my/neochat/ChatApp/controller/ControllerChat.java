@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import my.neochat.ChatApp.service.ServiceChat;
+import my.neochat.ChatApp.service.SignUpProcessor;
 
 @RestController
 public class ControllerChat {
+    private SignUpProcessor signUpProcessor;   
     private final ServiceChat Service;
-    public ControllerChat(ServiceChat Service)
+    public ControllerChat(ServiceChat Service, SignUpProcessor signUpProcessor)
     {
         this.Service=Service;
+        this.signUpProcessor=signUpProcessor;
     }
-    @GetMapping("home")
+    @GetMapping("test")
     public String GetTest(@RequestParam String username)
     {
         return Service.findUser(username).toString();
@@ -32,16 +35,16 @@ public class ControllerChat {
         return "Login done";
     }
 
-    @GetMapping("register")
-    public String GetRegister(Model model)
+    @GetMapping("signup")
+    public String GetSignUp(Model model)
     {
         return "Please Register";
     }
     
-    @PostMapping("register")
-    public String PostRegister(@RequestParam String username, @RequestParam String password)
+    @PostMapping("signup")
+    public void PostSignUp(@RequestParam String username, @RequestParam String password)
     {
-        return Service.registerUser(username, password);
+        signUpProcessor.signUp(username, password);
     }
 
     @GetMapping("chat")

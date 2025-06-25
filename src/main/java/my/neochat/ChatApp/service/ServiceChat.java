@@ -2,7 +2,6 @@ package my.neochat.ChatApp.service;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.repository.RepositoryMessage;
 import my.neochat.ChatApp.repository.RepositoryUser;
@@ -22,10 +21,4 @@ public class ServiceChat {
         return repositoryUser.findByusername(username);
     }
 
-    @Transactional
-    public String registerUser(String username, String password)
-    {
-        repositoryUser.registerUser(username, password);
-        return "OK";
-    }
 }
