@@ -26,7 +26,8 @@ public class ServiceChat {
     }
     public void signUp(ChatUser user)
     {
-        signUpProcessor.signUp(user);
+        signUpProcessor.set(user);
+        signUpProcessor.signUp();
     }
 
     public boolean logIn(ChatUser user)

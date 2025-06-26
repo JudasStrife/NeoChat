@@ -12,13 +12,19 @@ import my.neochat.ChatApp.repository.RepositoryUser;
 @RequestScope
 public class SignUpProcessor {
     private final RepositoryUser Repository;
-    
+    private String username;
+    private String password;
     public SignUpProcessor(RepositoryUser Repository)
     {
         this.Repository=Repository;
     }
-    public void signUp(ChatUser user)
+    public void signUp()
     {
-        Repository.registerUser(user.getUsername(), user.getPassword());
+        Repository.registerUser(username, password);
+    }
+    public void set(ChatUser user)
+    {
+        this.username=user.getUsername();
+        this.password=user.getPassword();
     }
 }
