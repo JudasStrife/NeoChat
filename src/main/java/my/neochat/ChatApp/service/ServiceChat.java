@@ -40,8 +40,8 @@ public class ServiceChat {
          }
          else return false;
     }
-    public void sendMessage(String receiver, ChatMessage message)
+    public void sendMessage(String receiver, String message)
     {
-        
+        repositoryMessage.saveAndFlush(new ChatMessage(message, logInInitials.getUsername(), receiver));
     }
 }

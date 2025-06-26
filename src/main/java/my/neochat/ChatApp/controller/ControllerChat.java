@@ -56,8 +56,8 @@ public class ControllerChat {
     }
     
     @PostMapping("chat")
-    public String PostChat(Model model, @RequestParam String username, @RequestBody ChatMessage message)
+    public void PostChat(Model model, @RequestParam String username, @RequestBody String message)
     {
-        return "Message sent";
+        Service.sendMessage(username, message);
     }
  }
