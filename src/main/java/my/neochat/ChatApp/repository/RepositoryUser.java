@@ -24,7 +24,7 @@ public interface RepositoryUser extends JpaRepository<ChatUser, String>{
   @Transactional
   @Modifying(clearAutomatically=true, flushAutomatically=true)                  
   @Query(
-  value = "DELETE from users WHERE u.username = :username",
+  value = "DELETE from users WHERE users.username = :username",
   nativeQuery = true)
   public void deleteUser(@Param("username") String username);
 

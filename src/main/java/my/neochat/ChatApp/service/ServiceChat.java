@@ -7,15 +7,17 @@ import my.neochat.ChatApp.repository.RepositoryMessage;
 import my.neochat.ChatApp.repository.RepositoryUser;
 @Service
 public class ServiceChat {
-    private SignUpProcessor signUpProcessor;  
+    private SignUpProcessor signUpProcessor;
+    private LogInInitials logInInitials;  
     private final RepositoryUser repositoryUser;
     private final RepositoryMessage repositoryMessage;
 
-    public ServiceChat(RepositoryUser repositoryUser, RepositoryMessage repositoryMessage,SignUpProcessor signUpProcessor)
+    public ServiceChat(RepositoryUser repositoryUser, RepositoryMessage repositoryMessage,SignUpProcessor signUpProcessor,LogInInitials logInInitials)
     {
         this.repositoryUser=repositoryUser;
         this.repositoryMessage=repositoryMessage;
         this.signUpProcessor=signUpProcessor;
+        this.logInInitials=logInInitials;
     }
 
     public ChatUser findUser(String username)
@@ -29,6 +31,12 @@ public class ServiceChat {
 
     public boolean logIn(ChatUser user)
     {
-        return repositoryUser.logInCheck(user.getUsername(), user.getPassword());
+        if (repositoryUser.logInCheck(user.getUsername(), user.getPassword()) )
+         {
+            logInInitials.setUsername(user.getUsername());
+            return true;
+         }
+         else return false;
     }
+    
 }

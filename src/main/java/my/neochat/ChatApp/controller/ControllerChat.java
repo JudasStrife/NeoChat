@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import my.neochat.ChatApp.model.ChatMessage;
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
 
@@ -55,7 +56,7 @@ public class ControllerChat {
     }
     
     @PostMapping("chat")
-    public String PostChat(Model model)
+    public String PostChat(Model model, @RequestParam String username, @RequestBody ChatMessage message)
     {
         return "Message sent";
     }
