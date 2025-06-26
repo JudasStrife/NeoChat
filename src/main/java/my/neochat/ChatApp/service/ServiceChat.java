@@ -2,6 +2,7 @@ package my.neochat.ChatApp.service;
 
 import org.springframework.stereotype.Service;
 
+import my.neochat.ChatApp.model.ChatMessage;
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.repository.RepositoryMessage;
 import my.neochat.ChatApp.repository.RepositoryUser;
@@ -39,5 +40,8 @@ public class ServiceChat {
          }
          else return false;
     }
-    
+    public void sendMessage(String receiver, ChatMessage message)
+    {
+        
+    }
 }
