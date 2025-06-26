@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
+import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.repository.RepositoryUser;
 
 @Lazy
@@ -16,8 +17,8 @@ public class SignUpProcessor {
     {
         this.Repository=Repository;
     }
-    public void signUp(String username, String password)
+    public void signUp(ChatUser user)
     {
-        Repository.registerUser(username, password);
+        Repository.registerUser(user.getUsername(), user.getPassword());
     }
 }

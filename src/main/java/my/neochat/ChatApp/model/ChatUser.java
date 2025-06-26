@@ -25,5 +25,13 @@ public class ChatUser
         return String.format(
             "User[username=%s, password=%s]",
             username, password);
+    }
+    public String getUsername()
+    {
+        return username;
     }    
+    public String getPassword()
+    {
+        return password;
+    }
 }

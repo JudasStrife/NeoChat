@@ -28,4 +28,7 @@ public interface RepositoryUser extends JpaRepository<ChatUser, String>{
   nativeQuery = true)
   public void deleteUser(@Param("username") String username);
 
+  @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 from users WHERE users.username=:username AND users.password=:password) THEN CAST (1 AS BIT) ELSE CAST (0 AS BIT) END", 
+  nativeQuery = true)
+  public boolean logInCheck(@Param("username") String username, @Param("password") String password);
 }

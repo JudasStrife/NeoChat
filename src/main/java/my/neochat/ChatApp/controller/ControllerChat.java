@@ -3,20 +3,21 @@ package my.neochat.ChatApp.controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
-import my.neochat.ChatApp.service.SignUpProcessor;
 
 @RestController
 public class ControllerChat {
-    private SignUpProcessor signUpProcessor;   
+ 
     private final ServiceChat Service;
-    public ControllerChat(ServiceChat Service, SignUpProcessor signUpProcessor)
+    public ControllerChat(ServiceChat Service)
     {
         this.Service=Service;
-        this.signUpProcessor=signUpProcessor;
+        
     }
     @GetMapping("test")
     public String GetTest(@RequestParam String username)
@@ -30,9 +31,9 @@ public class ControllerChat {
     }
     
     @PostMapping("login")
-    public String PostLogin(Model model)
+    public boolean PostLogin(Model model, @RequestBody ChatUser user)
     {
-        return "Login done";
+        return Service.logIn(user);
     }
 
     @GetMapping("signup")
@@ -42,9 +43,9 @@ public class ControllerChat {
     }
     
     @PostMapping("signup")
-    public void PostSignUp(@RequestParam String username, @RequestParam String password)
+    public void PostSignUp(@RequestBody ChatUser user)
     {
-        signUpProcessor.signUp(username, password);
+        Service.signUp(user);
     }
 
     @GetMapping("chat")
