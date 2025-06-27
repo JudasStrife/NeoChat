@@ -25,10 +25,13 @@ public class ServiceChat {
     {
         return repositoryUser.findByusername(username);
     }
+    public ChatMessage findMessage(String sender, String receiver)
+    {
+        return repositoryMessage.findMessage(sender,receiver);
+    }
     public void signUp(ChatUser user)
     {
-        signUpProcessor.set(user);
-        signUpProcessor.signUp();
+        signUpProcessor.signUp(user);
     }
 
     public boolean logIn(ChatUser user)

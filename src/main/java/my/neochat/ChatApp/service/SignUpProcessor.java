@@ -18,13 +18,10 @@ public class SignUpProcessor {
     {
         this.Repository=Repository;
     }
-    public void signUp()
-    {
-        Repository.registerUser(username, password);
-    }
-    public void set(ChatUser user)
+    public void signUp(ChatUser user)
     {
         this.username=user.getUsername();
         this.password=user.getPassword();
+        Repository.registerUser(username, password);
     }
 }

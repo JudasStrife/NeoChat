@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import my.neochat.ChatApp.model.ChatMessage;
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
 
@@ -24,6 +23,11 @@ public class ControllerChat {
     public String GetTest(@RequestParam String username)
     {
         return Service.findUser(username).toString();
+    }
+    @PostMapping("test")
+    public String PostTest(@RequestParam String sender, @RequestParam String receiver)
+    {
+        return Service.findMessage(sender, receiver).toString();
     }
     @GetMapping("login")
     public String GetLogin(Model model)

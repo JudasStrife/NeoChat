@@ -30,7 +30,7 @@ public class ChatMessage {
     public String toString()
     {
         return String.format(
-            "Message[id=%d, text=%s, from=%s, to=%s]",
+            "Message[id=%d, text=%s, from=%s, to=%s, date"+date.toString()+"]",
             id, text, sender, receiver);
     }
 }
