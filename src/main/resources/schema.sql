@@ -3,9 +3,8 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR(64) PRIMARY KEY,
   password VARCHAR(64) NOT NULL);
 
-DROP TABLE messages
 CREATE TABLE IF NOT EXISTS messages (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   text VARCHAR(256) NOT NULL,
   sender VARCHAR(64) REFERENCES users(username),
   receiver VARCHAR(64) REFERENCES users(username),

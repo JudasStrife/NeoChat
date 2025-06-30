@@ -1,5 +1,7 @@
 package my.neochat.ChatApp.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import my.neochat.ChatApp.model.ChatMessage;
@@ -25,7 +27,7 @@ public class ServiceChat {
     {
         return repositoryUser.findByusername(username);
     }
-    public ChatMessage findMessage(String sender, String receiver)
+    public List<ChatMessage> findMessage(String sender, String receiver)
     {
         return repositoryMessage.findMessage(sender,receiver);
     }

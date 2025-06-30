@@ -1,5 +1,7 @@
 package my.neochat.ChatApp.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +13,7 @@ import my.neochat.ChatApp.model.ChatMessage;
 public interface RepositoryMessage extends JpaRepository<ChatMessage, Long>
 {
     @Query(
-    value = "SELECT 1 from messages WHERE u.sender=:sender AND u.receiver=:receiver",
+    value = "SELECT * from messages WHERE messages.sender=:sender AND messages.receiver=:receiver",
     nativeQuery = true)
-    public ChatMessage findMessage(@Param("sender") String sender, @Param("receiver") String receiver);
+    public List<ChatMessage> findMessage(@Param("sender") String sender, @Param("receiver") String receiver);
 }
