@@ -1,5 +1,9 @@
 package my.neochat.ChatApp.controller;
 
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +17,12 @@ import my.neochat.ChatApp.service.ServiceChat;
 @RestController
 public class ControllerChat {
  
+    private SimpMessagingTemplate messagingTemplate;
     private final ServiceChat Service;
-    public ControllerChat(ServiceChat Service)
+    public ControllerChat(ServiceChat Service, SimpMessagingTemplate messagingTemplate)
     {
         this.Service=Service;
+        this.messagingTemplate=messagingTemplate;
         
     }
     @GetMapping("test")
@@ -63,5 +69,11 @@ public class ControllerChat {
     public void PostChat(Model model, @RequestParam String username, @RequestBody String message)
     {
         Service.sendMessage(username, message);
+    }
+
+    @MessageMapping("direct")
+    public void handleChatMessage(@Payload String message, @Header("simpUser") String username)
+    {
+        messagingTemplate.convertAndSendToUser(username,"/direct", "Message");
     }
  }
