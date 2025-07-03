@@ -1,4 +1,4 @@
-package my.neochat.ChatApp;
+package my.neochat.ChatApp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
