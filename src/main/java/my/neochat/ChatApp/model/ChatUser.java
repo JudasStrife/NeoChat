@@ -1,5 +1,7 @@
 package my.neochat.ChatApp.model;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class ChatUser
+public class ChatUser implements UserDetails
 {
     @Id
     @Column(name = "username")
