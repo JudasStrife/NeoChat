@@ -3,7 +3,6 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -15,9 +14,11 @@ public class SecurityConfiguration {
 
      public SecurityFilterChain configure(HttpSecurity Security) throws Exception
      {
-        Security.httpBasic(Customizer.withDefaults());
+        Security.formLogin(c->c.defaultSuccessUrl("/home",true));
         Security.authorizeHttpRequests(
-        c->c.anyRequest().permitAll());
+        c->c.requestMatchers("/register").permitAll()
+            .requestMatchers("/chat").authenticated()
+            .requestMatchers("/admin").hasRole("ADMIN"));
         return Security.build();
      }
     @Bean
