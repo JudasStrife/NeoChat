@@ -4,6 +4,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +19,16 @@ import my.neochat.ChatApp.service.ServiceChat;
 
 @Controller
 public class ControllerChat {
- 
+    private final UserDetailsManager userDetailsManager;
     private final SimpMessagingTemplate messagingTemplate;
     private final ServiceChat Service;
-    public ControllerChat(ServiceChat Service, SimpMessagingTemplate messagingTemplate)
+    public ControllerChat(ServiceChat Service, SimpMessagingTemplate messagingTemplate, UserDetailsManager userDetailsManager)
     {
         this.Service=Service;
         this.messagingTemplate=messagingTemplate;
-        
-    }    @GetMapping("home")
+        this.userDetailsManager=userDetailsManager;
+    }     
+    @GetMapping("home")
     public String GetHome(Model model)
     {
         System.out.println("Entering home page");        
@@ -47,6 +50,11 @@ public class ControllerChat {
     public void PostSignUp(@ModelAttribute("newUser") ChatUser newUser)
     {
        System.out.println(newUser.getUsername()+" "+newUser.getPassword());
+       var user=User.withUsername(newUser.getUsername())
+                    .password(newUser.getPassword())
+                    .roles("USER")
+                    .build();
+        userDetailsManager.createUser(user);
     }
 
     @GetMapping("chat")
