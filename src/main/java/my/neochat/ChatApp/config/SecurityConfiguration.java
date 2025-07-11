@@ -22,11 +22,10 @@ public class SecurityConfiguration {
         c->c.loginPage("/login")
             .defaultSuccessUrl("/home",true));
         Security.authorizeHttpRequests(
-            c->c.anyRequest().permitAll()
-        /*c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/register","/test-login").permitAll()
+        c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/signup").permitAll()
             .requestMatchers("/chat").authenticated()
             .requestMatchers("/admin").hasRole("ADMIN")
-            .anyRequest().authenticated()*/);
+            .anyRequest().authenticated());
         return Security.build();
      }
     @Bean
