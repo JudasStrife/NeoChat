@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         c->c.loginPage("/login")
             .defaultSuccessUrl("/home",true));
         Security.authorizeHttpRequests(
-        c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/signup").permitAll()
+        c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/signup", "/signup/**", "/css/**", "/js/**", "/images/**").permitAll()
             .requestMatchers("/chat").authenticated()
             .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated());

@@ -7,10 +7,12 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
 
 @Controller
@@ -37,13 +39,14 @@ public class ControllerChat {
     @GetMapping("signup")
     public String GetSignUp(Model model)
     {
-        return "Please Register";
+        model.addAttribute("newUser",new ChatUser());
+        return "signup";
     }
     
     @PostMapping("signup")
-    public void PostSignUp(@RequestBody String user)
+    public void PostSignUp(@ModelAttribute("newUser") ChatUser newUser)
     {
-       
+       System.out.println(newUser.getUsername()+" "+newUser.getPassword());
     }
 
     @GetMapping("chat")
