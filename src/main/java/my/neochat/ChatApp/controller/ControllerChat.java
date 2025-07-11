@@ -23,18 +23,7 @@ public class ControllerChat {
         this.Service=Service;
         this.messagingTemplate=messagingTemplate;
         
-    }
-    @GetMapping("test")
-    public String GetTest(@RequestParam String username)
-    {
-        return "1";
-    }
-    @PostMapping("test")
-    public String PostTest(@RequestParam String sender, @RequestParam String receiver)
-    {
-        return Service.findMessage(sender, receiver).toString();
-    }
-    @GetMapping("home")
+    }    @GetMapping("home")
     public String GetHome(Model model)
     {
         System.out.println("Entering home page");        
@@ -45,13 +34,6 @@ public class ControllerChat {
     {
         return "login";
     }
-    @GetMapping("test-login")
-    public String GetTestLogin(Model model)
-    {
-        System.out.println("Entering custom login page");
-        return "login";
-    }
-
     @GetMapping("signup")
     public String GetSignUp(Model model)
     {
