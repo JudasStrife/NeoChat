@@ -14,11 +14,18 @@ public class SecurityConfiguration {
 
      public SecurityFilterChain configure(HttpSecurity Security) throws Exception
      {
-        Security.formLogin(c->c.defaultSuccessUrl("/home",true));
+        Security.csrf(
+            c->c.disable()
+        );
+        Security.formLogin(
+        c->c.loginPage("/login")
+            .defaultSuccessUrl("/home",true));
         Security.authorizeHttpRequests(
-        c->c.requestMatchers("/register").permitAll()
+            c->c.anyRequest().permitAll()
+        /*c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/register","/test-login").permitAll()
             .requestMatchers("/chat").authenticated()
-            .requestMatchers("/admin").hasRole("ADMIN"));
+            .requestMatchers("/admin").hasRole("ADMIN")
+            .anyRequest().authenticated()*/);
         return Security.build();
      }
     @Bean

@@ -4,20 +4,20 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
 
-@RestController
+@Controller
 public class ControllerChat {
  
-    private SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate messagingTemplate;
     private final ServiceChat Service;
     public ControllerChat(ServiceChat Service, SimpMessagingTemplate messagingTemplate)
     {
@@ -35,16 +35,22 @@ public class ControllerChat {
     {
         return Service.findMessage(sender, receiver).toString();
     }
+    @GetMapping("home")
+    public String GetHome(Model model)
+    {
+        System.out.println("Entering home page");        
+        return "home";
+    }
     @GetMapping("login")
     public String GetLogin(Model model)
     {
-        return "Please Login";
+        return "login";
     }
-    
-    @PostMapping("login")
-    public boolean PostLogin(Model model, @RequestBody ChatUser user)
+    @GetMapping("test-login")
+    public String GetTestLogin(Model model)
     {
-        return Service.logIn(user);
+        System.out.println("Entering custom login page");
+        return "login";
     }
 
     @GetMapping("signup")
