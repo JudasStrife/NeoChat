@@ -48,13 +48,15 @@ public class ControllerChat {
     
     @PostMapping("signup")
     public void PostSignUp(@ModelAttribute("newUser") ChatUser newUser)
-    {
+    { if (!userDetailsManager.userExists(newUser.getUsername()))
+        {
        System.out.println(newUser.getUsername()+" "+newUser.getPassword());
        var user=User.withUsername(newUser.getUsername())
                     .password(newUser.getPassword())
                     .roles("USER")
                     .build();
         userDetailsManager.createUser(user);
+        } else System.out.println("User already exists");
     }
 
     @GetMapping("chat")
