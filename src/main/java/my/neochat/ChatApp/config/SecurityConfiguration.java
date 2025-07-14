@@ -18,5 +18,16 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder()
     {
         return NoOpPasswordEncoder.getInstance();
-    }     
+    }
+    /* 
+    @Bean
+    UrlBasedCorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration configuration;
+        configuration = new CorsConfiguration();
+	    configuration.setAllowedOriginPatterns(List.of("*"));
+	    configuration.setAllowedMethods(List.of("*"));
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", configuration);
+	    return source;
+}     */
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
@@ -58,16 +57,16 @@ public class ControllerChat {
         userDetailsManager.createUser(user);
         } else System.out.println("User already exists");
     }
-    @ResponseBody
     @GetMapping("chat")
     public String GetChat(Model model, Authentication authentication)
     {
-        return "Current user:"+authentication.getName();
+        return "chat";
     }
     @MessageMapping("direct")
-    public void handleChatMessage(@Payload String message, @RequestParam String username, Authentication authentication)
+    public void handleChatMessage(@Payload String message, @RequestParam("user") String username, Authentication authentication)
     {
         messagingTemplate.convertAndSendToUser(username,"queue/direct", message);
         //Service.saveMessage(message,authentication.getName(),username);
+        System.out.println("User already exists");
     }
  }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+    <script>/*
+        const client=new StompJs.Client();
+        client.brokerURL='http://localhost:8080/ws';
+        client.onConnect=function(frame)
+        {
+            const url=new URL(window.location.href);
+            const subscription = client.subscribe('queue/direct', function(message)
+            {
+                alert(message.body);
+            });
+            if(url.searchParams.has('user'))
+            {client.publish({destination:'/app/direct', body:'Hello '+url.searchParams.get('user')});}
+
+        }
+        client.activate();
+        */
+        const ws = new WebSocket('ws://localhost:8080/ws');
+        ws.onopen = () => console.log("RAW Connected!");
+    </script>
+</head>
+<body>
+    <h1>Chat messages</h1>
+    <label id="chat"></label>    
+</body>
+</html>

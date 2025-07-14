@@ -22,10 +22,10 @@ public class SecurityFilterConfiguration {
         c->c.loginPage("/login")
             .defaultSuccessUrl("/home",true));
         Security.authorizeHttpRequests(
-        c->c.requestMatchers("/ws/**", "/webjars/**", "/login","/signup", "/css/**", "/js/**", "/images/**").permitAll()
+        c->c.requestMatchers("/webjars/**", "/login","/signup", "/css/**", "/js/**", "/images/**").permitAll()
             .requestMatchers("/chat").authenticated()
             .requestMatchers("/admin").hasRole("ADMIN")
-            .anyRequest().authenticated());
+            .anyRequest().permitAll());
         Security.authenticationProvider(customAuthenticationProvider);
         return Security.build();
      }
