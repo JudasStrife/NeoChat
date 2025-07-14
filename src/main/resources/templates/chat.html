@@ -22,7 +22,7 @@
         client.activate();
         */
         const ws = new WebSocket('ws://localhost:8080/ws');
-        ws.onopen = () => console.log("RAW Connected!");
+        ws.onerror = (e) => console.error("Raw WS error:", e);
     </script>
 </head>
 <body>
