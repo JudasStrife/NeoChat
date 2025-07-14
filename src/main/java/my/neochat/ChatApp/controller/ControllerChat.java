@@ -67,6 +67,6 @@ public class ControllerChat {
     {
         messagingTemplate.convertAndSendToUser(username,"queue/direct", message);
         //Service.saveMessage(message,authentication.getName(),username);
-        System.out.println("User already exists");
+        System.out.println(message);
     }
  }
