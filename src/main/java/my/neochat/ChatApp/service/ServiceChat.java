@@ -19,5 +19,8 @@ public class ServiceChat {
     {
         return repositoryMessage.findMessage(sender,receiver);
     }
-
+    public void saveMessage(String message, String sender, String receiver)
+    {
+        repositoryMessage.save(new ChatMessage(message, sender, receiver));
+    }
 }

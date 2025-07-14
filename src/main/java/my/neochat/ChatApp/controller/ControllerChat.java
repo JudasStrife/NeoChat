@@ -1,9 +1,9 @@
 package my.neochat.ChatApp.controller;
 
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
@@ -58,22 +58,16 @@ public class ControllerChat {
         userDetailsManager.createUser(user);
         } else System.out.println("User already exists");
     }
-
+    @ResponseBody
     @GetMapping("chat")
-    public String GetChat(Model model)
+    public String GetChat(Model model, Authentication authentication)
     {
-        return "Looking at chats";
+        return "Current user:"+authentication.getName();
     }
-    
-    @PostMapping("chat")
-    public void PostChat(Model model, @RequestParam String username, @RequestBody String message)
-    {
-        
-    }
-
     @MessageMapping("direct")
-    public void handleChatMessage(@Payload String message, @Header("simpUser") String username)
+    public void handleChatMessage(@Payload String message, @RequestParam String username, Authentication authentication)
     {
-        messagingTemplate.convertAndSendToUser(username,"/direct", "Message");
+        messagingTemplate.convertAndSendToUser(username,"queue/direct", message);
+        //Service.saveMessage(message,authentication.getName(),username);
     }
  }
