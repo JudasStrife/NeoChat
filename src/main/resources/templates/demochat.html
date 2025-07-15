@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
 </head>
 <body>
     <div class="chat-header">
@@ -36,7 +34,6 @@
         {
             const chat = new ChatApp();
             window.chatApp = chat;
-            const url=new URL(window.location.href);
             const subscription = client.subscribe('queue/direct', function(message)
             {
                 alert(message.body);
@@ -44,7 +41,6 @@
             if(url.searchParams.has('user'))
             {client.publish({destination:'/app/direct', body:'Hello '+url.searchParams.get('user')});}
         }
-        client.activate();
         class ChatApp {
             constructor() {
                 this.messagesContainer = document.getElementById('messagesContainer');
@@ -89,7 +85,7 @@
                 this.messageInput.style.height = Math.min(this.messageInput.scrollHeight, 100) + 'px';
             }
 
-            addMessage(text, sender, timestamp = new Date()) {
+            addMessage(text, sender) {
                 const isEmpty = this.messagesContainer.querySelector('.empty-state');
                 if (isEmpty) {
                     isEmpty.remove();
@@ -102,10 +98,7 @@
                 
                 messageDiv.innerHTML = `
                     <div class="message-content">
-                        <div class="message-header">
-                            <span class="username">${sender}</span>
-                            <span class="timestamp">${timeString}</span>
-                        </div>
+                        <div class="username">${sender}</div>
                         <div class="message-text">${this.escapeHtml(text)}</div>
                     </div>
                 `;
@@ -131,14 +124,6 @@
 
             async sendToBackend(message) {
                 try {
-                    client.publish({destination:'/app/direct',
-                    body:
-                    {
-                        JSON.stringify({
-                            message:message
-
-                        })
-                    }});
                     // Replace with your actual backend endpoint
                     const response = await fetch('/api/send-message', {
                         method: 'POST',
@@ -147,8 +132,7 @@
                         },
                         body: JSON.stringify({
                             message: message,
-                            to: this.otherUser,
-                            timestamp: new Date().toISOString()
+                            to: this.otherUser
                         })
                     });
 
@@ -160,6 +144,19 @@
                 } catch (error) {
                     console.error('Error sending message:', error);
                     // You might want to show an error message to the user
+                }
+            }
+
+            formatTimestamp(timestamp) {
+                const date = new Date(timestamp);
+                const now = new Date();
+                const isToday = date.toDateString() === now.toDateString();
+                
+                if (isToday) {
+                    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                } else {
+                    return date.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' + 
+                           date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 }
             }
 
@@ -178,24 +175,23 @@
                 this.messagesContainer.innerHTML = '';
                 
                 messages.forEach(msg => {
-                    this.addMessage(msg.text, msg.sender, new Date(msg.timestamp));
+                    this.addMessage(msg.text, msg.sender);
                 });
             }
 
             // Method to add a message from the other user (for real-time updates)
-            receiveMessage(text = new Date()) {
+            receiveMessage(text) {
                 this.addMessage(text, this.otherUser);
             }
         }
 
         // Initialize the chat app
 
-
         // Example usage for populating messages from backend:
         // const exampleMessages = [
-        //     { text: "Hello there!", sender: "Alice", timestamp: "2023-10-01T10:00:00Z" },
-        //     { text: "Hi Alice! How are you?", sender: "You", timestamp: "2023-10-01T10:01:00Z" },
-        //     { text: "I'm doing great, thanks for asking!", sender: "Alice", timestamp: "2023-10-01T10:02:00Z" }
+        //     { text: "Hello there!", sender: "Alice" },
+        //     { text: "Hi Alice! How are you?", sender: "You" },
+        //     { text: "I'm doing great, thanks for asking!", sender: "Alice" }
         // ];
         // chat.loadMessages(exampleMessages);
 

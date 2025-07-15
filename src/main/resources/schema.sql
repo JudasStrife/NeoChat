@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS authorities (
 
 CREATE UNIQUE INDEX iF NOT EXISTS ix_auth_username ON authorities (username, authority);
 
+DROP TABLE MESSAGES;
 CREATE TABLE IF NOT EXISTS messages (
   id SERIAL PRIMARY KEY,
   text VARCHAR(256) NOT NULL,
   sender VARCHAR(50) REFERENCES users(username),
-  receiver VARCHAR(50) REFERENCES users(username),
-  date TIMESTAMP NOT NULL);
+  receiver VARCHAR(50) REFERENCES users(username));
