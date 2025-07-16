@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Connect to WebSocket
     client.onConnect=function(frame) {
         console.log('Connected: ' + frame);
-        
         // Subscribe to the user's personal queue
-        client.subscribe('user/queue/direct', function(message) {
-            const msg = JSON.parse(message.body);
-            displayMessage(msg.sender, msg.content, 'incoming');
+        client.subscribe('/user/queue/direct', function(message) {
+            if(message.headers['sender']==recipient){
+            displayMessage(message.headers['sender'], message.body, 'incoming');}
+            console.log('Received a message -'+message.body+'- from '+message.headers['sender']);
         });
     }
     client.onError=function(error) {
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (content) {      
             client.publish({destination:'/app/direct/'+recipient, body:content});
             displayMessage('You', content, 'outgoing');
+            console.log('Sent a message -'+content+'- to '+recipient);
             messageInput.value = '';
         }
     }

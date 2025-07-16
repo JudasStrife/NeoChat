@@ -1,5 +1,8 @@
 package my.neochat.ChatApp.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -18,6 +21,7 @@ import my.neochat.ChatApp.service.ServiceChat;
 
 @Controller
 public class ControllerChat {
+    Map<String, Object> headers = new HashMap<>();
     private final UserDetailsManager userDetailsManager;
     private final SimpMessagingTemplate messagingTemplate;
     private final ServiceChat Service;
@@ -64,8 +68,10 @@ public class ControllerChat {
     }
     @MessageMapping("direct/{user}")
     public void handleChatMessage(@Payload String message, @DestinationVariable("user") String username, Authentication authentication)
-    {
-        messagingTemplate.convertAndSendToUser(username,"queue/direct", message);
+    {   
+        headers.put("sender",authentication.getName());
+        messagingTemplate.convertAndSendToUser(username,"/queue/direct",message,headers);
+        headers.clear();
         //Service.saveMessage(message,authentication.getName(),username);
         System.out.println(message+"to"+username);
     }
