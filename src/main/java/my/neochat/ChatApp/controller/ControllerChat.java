@@ -1,5 +1,6 @@
 package my.neochat.ChatApp.controller;
 
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -11,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
@@ -60,13 +60,13 @@ public class ControllerChat {
     @GetMapping("chat")
     public String GetChat(Model model, Authentication authentication)
     {
-        return "chat";
+        return "deepseekchat";
     }
-    @MessageMapping("direct")
-    public void handleChatMessage(@Payload String message, @RequestParam("user") String username, Authentication authentication)
+    @MessageMapping("direct/{user}")
+    public void handleChatMessage(@Payload String message, @DestinationVariable("user") String username, Authentication authentication)
     {
         messagingTemplate.convertAndSendToUser(username,"queue/direct", message);
         //Service.saveMessage(message,authentication.getName(),username);
-        System.out.println(message);
+        System.out.println(message+"to"+username);
     }
  }
