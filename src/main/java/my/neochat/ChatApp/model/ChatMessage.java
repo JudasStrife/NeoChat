@@ -16,6 +16,9 @@ public class ChatMessage {
     private String sender;
     private String receiver;
     protected ChatMessage(){};
+    public String getText(){return text;}
+    public String getSender(){return sender;}
+    public String getReceiver(){return receiver;}
     public ChatMessage(String text, String sender, String receiver)
     {
         this.text=text;

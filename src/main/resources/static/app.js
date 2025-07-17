@@ -79,8 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
              throw new Error(`Response status: ${response.status}`);
          }
-         const history=await response.text();
-         console.log(history); 
+         const history=await response.json();
+         history.forEach(message => {
+            if (message.sender==recipient){
+            displayMessage(message.sender, message.text, 'incoming');}
+            else displayMessage('You', message.text, 'outgoing');
+         });
+          
         } catch (error) {
             console.error(error.message);
         }}

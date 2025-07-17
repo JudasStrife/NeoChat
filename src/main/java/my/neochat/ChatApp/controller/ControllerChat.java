@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import my.neochat.ChatApp.model.ChatMessage;
 import my.neochat.ChatApp.model.ChatUser;
-import my.neochat.ChatApp.model.DTOmessage;
 import my.neochat.ChatApp.service.ServiceChat;
 
 @Controller
@@ -74,13 +73,11 @@ public class ControllerChat {
 
     @ResponseBody
     @GetMapping("chat/history/{receiver}")
-    public ResponseEntity<?> GetHistory(Authentication authentication, @PathVariable("receiver") String receiver)
+    public List<ChatMessage> GetHistory(Authentication authentication, @PathVariable("receiver") String receiver)
     {
-        List<DTOmessage> history=Service.getHistory(authentication.getName(), receiver);
-        if (history.isEmpty()) {
-            return ResponseEntity.ok().body("No messages found between " + authentication.getName() + " and " + receiver);
-        }
-        return ResponseEntity.ok(history);
+
+        List<ChatMessage> history=Service.getHistory(authentication.getName(), receiver);
+        return history;
     }
     @MessageMapping("direct/{user}")
     public void handleChatMessage(@Payload String message, @DestinationVariable("user") String username, Authentication authentication)
@@ -88,7 +85,7 @@ public class ControllerChat {
         headers.put("sender",authentication.getName());
         messagingTemplate.convertAndSendToUser(username,"/queue/direct",message,headers);
         headers.clear();
-        //Service.saveMessage(message,authentication.getName(),username);
+        Service.saveMessage(message,authentication.getName(),username);
         System.out.println(message+"to"+username);
     }
  }
