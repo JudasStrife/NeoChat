@@ -1,8 +1,10 @@
 package my.neochat.ChatApp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import my.neochat.ChatApp.model.ChatUser;
+import my.neochat.ChatApp.model.DTOmessage;
 import my.neochat.ChatApp.service.ServiceChat;
 
 @Controller
@@ -65,6 +70,17 @@ public class ControllerChat {
     public String GetChat(Model model, Authentication authentication)
     {
         return "deepseekchat";
+    }
+
+    @ResponseBody
+    @GetMapping("chat/history/{receiver}")
+    public ResponseEntity<?> GetHistory(Authentication authentication, @PathVariable("receiver") String receiver)
+    {
+        List<DTOmessage> history=Service.getHistory(authentication.getName(), receiver);
+        if (history.isEmpty()) {
+            return ResponseEntity.ok().body("No messages found between " + authentication.getName() + " and " + receiver);
+        }
+        return ResponseEntity.ok(history);
     }
     @MessageMapping("direct/{user}")
     public void handleChatMessage(@Payload String message, @DestinationVariable("user") String username, Authentication authentication)

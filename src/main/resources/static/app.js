@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('No recipient specified in URL. Please use ?user=username in the URL.');
         return;
     }
-    
+    getData();
     // Set chat title
     document.getElementById('chat-title').textContent = `Chat with ${recipient}`;
     
@@ -72,4 +72,16 @@ document.addEventListener('DOMContentLoaded', function() {
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+    async function getData() {
+        const url = "http://localhost:8080/chat/history/"+recipient;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+             throw new Error(`Response status: ${response.status}`);
+         }
+         const history=await response.text();
+         console.log(history); 
+        } catch (error) {
+            console.error(error.message);
+        }}
 });
