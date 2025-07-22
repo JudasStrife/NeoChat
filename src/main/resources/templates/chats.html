@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Chats</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <a href="/" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+            <h1>Your Chats</h1>
+            <div class="new-chat-input">
+                <input 
+                    type="text" 
+                    id="new-user-input" 
+                    placeholder="Add new chat..." 
+                    aria-label="Add new chat"
+                >
+            </div>
+        </div>
+        
+        <div id="chats-list" class="chats-list">
+            <!-- Chat boxes will be dynamically added here -->
+        </div>
+    </div>
+
+    <script src="/chats.js"></script>
+</body>
+</html>

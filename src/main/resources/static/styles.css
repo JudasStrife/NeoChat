@@ -156,3 +156,73 @@ button:hover {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+
+
+.chats-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 5px;
+}
+
+/* Individual Chat Item */
+.chat-box-item {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.chat-box-item:hover {
+    background-color: #f9f9f9;
+    border-color: #d0d0d0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Recipient Name */
+.recipient-name {
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Header adjustments for new chat input */
+.chat-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.chat-header h1 {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.new-chat-input {
+    flex: 2;
+}
+
+.new-chat-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.new-chat-input input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}

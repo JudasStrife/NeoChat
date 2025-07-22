@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import my.neochat.ChatApp.model.ChatMessage;
 import my.neochat.ChatApp.model.ChatUser;
 import my.neochat.ChatApp.service.ServiceChat;
@@ -67,7 +68,12 @@ public class ControllerChat {
     @GetMapping("chat")
     public String GetChat(Model model, Authentication authentication)
     {
-        return "deepseekchat";
+        return "chat";
+    }
+    @GetMapping("chats")
+    public String GetChats(Model model, Authentication authentication)
+    {
+        return "chats";
     }
 
     @ResponseBody
@@ -78,6 +84,15 @@ public class ControllerChat {
         List<ChatMessage> history=Service.getHistory(authentication.getName(), receiver);
         return history;
     }
+    @ResponseBody
+    @GetMapping("chats/history")
+    public List<String> GetChatboxes(Authentication authentication)
+    {
+
+        List<String> history=Service.getChatboxes(authentication.getName());
+        return history;
+    }
+
     @MessageMapping("direct/{user}")
     public void handleChatMessage(@Payload String message, @DestinationVariable("user") String username, Authentication authentication)
     {   

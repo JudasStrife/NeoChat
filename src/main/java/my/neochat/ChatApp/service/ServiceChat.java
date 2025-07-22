@@ -19,6 +19,10 @@ public class ServiceChat {
     {
         return repositoryMessage.findHistory(sender,receiver);
     }
+    public List<String> getChatboxes(String user)
+    {
+        return repositoryMessage.findChatboxes(user);
+    }
     public void saveMessage(String message, String sender, String receiver)
     {
         repositoryMessage.save(new ChatMessage(message, sender, receiver));

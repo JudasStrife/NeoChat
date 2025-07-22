@@ -16,8 +16,14 @@ public interface RepositoryMessage extends JpaRepository<ChatMessage, Long>
     value = "SELECT * from messages WHERE messages.sender=:sender AND messages.receiver=:receiver",
     nativeQuery = true)
     public List<ChatMessage> findMessage(@Param("sender") String sender, @Param("receiver") String receiver);
+
     @Query(
     value = "SELECT id, text, sender, receiver from messages WHERE (messages.sender=:sender AND messages.receiver=:receiver) OR (messages.sender=:receiver AND messages.receiver=:sender)",
     nativeQuery = true)
     public List<ChatMessage> findHistory(@Param("sender") String sender, @Param("receiver") String receiver);
+
+    @Query(
+    value = "SELECT sender from messages where messages.receiver=:user UNION SELECT receiver from messages where messages.sender=:user",
+    nativeQuery = true)
+    public List<String> findChatboxes(@Param("user") String user);    
 }

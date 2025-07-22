@@ -1,5 +1,6 @@
 package my.neochat.ChatApp.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,13 +21,14 @@ public class SecurityFilterConfiguration {
         );
         Security.formLogin(
         c->c.loginPage("/login")
-            .defaultSuccessUrl("/home",true));
+            .defaultSuccessUrl("/chats",true));
         Security.authorizeHttpRequests(
-        c->c.requestMatchers("/webjars/**", "/login","/signup", "/css/**", "/js/**", "/images/**", "/ws/**").permitAll()
-            .requestMatchers("/chat").authenticated()
+        c->c.requestMatchers("/webjars/**", "/login","/signup","/ws/**","/*.css").permitAll()
+            .requestMatchers("/chat","/chats").authenticated()
             .requestMatchers("/admin").hasRole("ADMIN")
-            //.anyRequest().authenticated());
-            .anyRequest().permitAll());
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() 
+            .anyRequest().authenticated());
+           // .anyRequest().permitAll());
         Security.authenticationProvider(customAuthenticationProvider);
         return Security.build();
      }
